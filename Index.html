@@ -1,1 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ali Muawia - Portfolio Bot</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            min-height: 700px;
+        }
+
+        /* Left Panel - Profile */
+        .left-panel {
+            background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
+
+        .profile-section {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .profile-img-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255,255,255,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .status-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: #10b981;
+            border-radius: 50%;
+            border: 3px solid white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .title {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .quick-info {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .info-item:hover {
+            transform: translateX(5px);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .info-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+        .download-cv {
+            margin-top: auto;
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            margin-top: 30px;
+        }
+
+        .download-cv:hover {
+            background: white;
+            color: #1e3a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Right Panel - Chat Bot */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            background: #f8fafc;
+        }
+
+        .chat-header {
+            background: white;
+            padding: 20px 25px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bot-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .header-info h3 {
+            font-size: 16px;
+            color: #1e293b;
+            margin-bottom: 2px;
+        }
+
+        .header-info p {
+            font-size: 12px;
+            color: #10b981;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: messageSlide 0.3s ease;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-message {
+            background: white;
+            color: #1e293b;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .quick-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .quick-btn {
+            padding: 8px 14px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #475569;
+        }
+
+        .quick-btn:hover {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .chat-input-container {
+            background: white;
+            padding: 20px 25px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 5px;
+            border-radius: 25px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .chat-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 15px;
+            font-size: 14px;
+            outline: none;
+            color: #1e293b;
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1e3a8a);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 18px;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .typing-indicator.active {
+            display: flex;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #3b82f6;
+            border-radius: 50%;
+            animation: typingBounce 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .experience-card {
+            background: #f8fafc;
+            border-left: 3px solid #3b82f6;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 12px;
+        }
+
+        .exp-title {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 3px;
+        }
+
+        .exp-role {
+            color: #3b82f6;
+            font-size: 11px;
+        }
+
+        .exp-duration {
+            color: #6b7280;
+            font-size: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .left-panel {
+                padding: 30px 20px;
+            }
+
+            .profile-img-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel - Profile -->
+        <div class="left-panel">
+            <div class="profile-section">
+                <div class="profile-img-container">
+                    <img src="https://i.ibb.co/8g7W5V9/profile.jpg" alt="Ali Muawia" class="profile-img" id="profileImg">
+                    <div class="status-badge"></div>
+                </div>
+                <h1 class="name">Ali Muawia</h1>
+                <p class="title">Customer Service & Digital Marketing Professional</p>
+
+                <div class="quick-info">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-phone"></i></div>
+                        <span>+92 319 6919750</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                        <span>alimuawia108@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <span>Khanewal, Pakistan</span>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fas fa-briefcase"></i></div>
+                        <span>2.5+ Years Experience</span>
+                    </div>
+                </div>
+
+                <a href="#" class="download-cv" onclick="downloadCV()">
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Panel - Chat Bot -->
+        <div class="right-panel">
+            <div class="chat-header">
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="header-info">
+                    <h3>Ali Muawia Bot</h3>
+                    <p><span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span> Online</p>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    👋 Assalam-o-Alaikum! Main Ali Muawia ka personal assistant hoon. Aap mujhse unke baare mein kuch bhi pooch sakte hain!
+                    <div class="quick-buttons">
+                        <button class="quick-btn" onclick="handleQuickReply('experience')">💼 Experience</button>
+                        <button class="quick-btn" onclick="handleQuickReply('skills')">🛠️ Skills</button>
+                        <button class="quick-btn" onclick="handleQuickReply('education')">🎓 Education</button>
+                        <button class="quick-btn" onclick="handleQuickReply('contact')">📞 Contact</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+
+            <div class="chat-input-container">
+                <div class="input-wrapper">
+                    <input type="text" class="chat-input" id="userInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Bot responses database
+        const botResponses = {
+            'experience': `💼 <b>Work Experience:</b><br><br>
+                <div class="experience-card">
+                    <div class="exp-title">UFONE TELECOM</div>
+                    <div class="exp-role">CSR & Retail Sales Officer</div>
+                    <div class="exp-duration">⏱️ 18 Months</div>
+                </div>
+                <div class="experience-card">
+                    <div class="exp-title">ZH IT SOLUTIONS</div>
+                    <div class="exp-role">Call Center Agent</div>
+                    <div class="exp-duration">⏱️ 9 Months</div>
+                </div>
+                <div class="experience-card">
+                    <div class="exp-title">JAZZ TELECOM</div>
+                    <div class="exp-role">Direct Sales Officer (DSO)</div>
+                    <div class="exp-duration">⏱️ 6 Months</div>
+                </div>
+                <div class="experience-card">
+                    <div class="exp-title">THE URBAN UNIT</div>
+                    <div class="exp-role">Surveyor (Flood Survey)</div>
+                    <div class="exp-duration">⏱️ Project Based</div>
+                </div>`,
+
+            'skills': `🛠️ <b>Digital & Technical Skills:</b><br><br>
+                ✅ <b>SEO & Marketing:</b> Guest Posting, Blog Outreach<br>
+                ✅ <b>Design:</b> Thumbnail Design, Canva, Photoshop Basics<br>
+                ✅ <b>Content:</b> Article Writing, AI-based Content Rewriting<br>
+                ✅ <b>Technical:</b> Windows Installation, System Troubleshooting<br>
+                ✅ <b>Typing:</b> 25-30 Words Per Minute<br>
+                ✅ <b>Languages:</b> Urdu, Punjabi (Native), English (Basic Spoken/Fluent Written)`,
+
+            'education': `🎓 <b>Education:</b><br><br>
+                <div class="experience-card">
+                    <div class="exp-title">FA (Faculty of Arts)</div>
+                    <div class="exp-role">✓ Passed / Cleared</div>
+                    <div class="exp-duration">📅 Year: 2025</div>
+                </div>`,
+
+            'contact': `📞 <b>Contact Information:</b><br><br>
+                📱 <b>Phone:</b> +92 319 6919750<br>
+                📧 <b>Email:</b> alimuawia108@gmail.com<br>
+                🏠 <b>Permanent Address:</b> Mohallah Rahman Town, St#4 Abdul Hakim, Tehsil Kabirwala, District Khanewal<br>
+                📮 <b>Mailing Address:</b> Chak No 9A/8R, Tehsil Mian Channu, District Khanewal<br>
+                🆔 <b>CNIC:</b> 36102-0918239-7`,
+
+            'hello': '👋 Assalam-o-Alaikum! Kaise hain aap? Main Ali Muawia ke baare mein kya bata sakta hoon?',
+            'hi': '👋 Hello! Main Ali Muawia ka bot hoon. Aapko kya jaanna hai?',
+            'cv': '📄 Aap CV download karna chahte hain? Left side pe "Download CV" button click karein!',
+            'about': `👤 <b>About Ali Muawia:</b><br><br>
+                Motivated and hardworking individual with 2.5+ years experience in telecom customer service. Expert in digital marketing, SEO, and content writing. Looking for opportunities to grow professionally!`,
+            'default': '😊 Sorry, main samjha nahi. Aap "experience", "skills", "education", ya "contact" likh kar try karein!'
+        };
+
+        function addMessage(text, isUser = false) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+            messageDiv.innerHTML = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            document.getElementById('typingIndicator').classList.add('active');
+        }
+
+        function hideTyping() {
+            document.getElementById('typingIndicator').classList.remove('active');
+        }
+
+        function getBotResponse(input) {
+            const lowerInput = input.toLowerCase();
+
+            if (lowerInput.includes('experience') || lowerInput.includes('job') || lowerInput.includes('work')) {
+                return botResponses['experience'];
+            } else if (lowerInput.includes('skill') || lowerInput.includes('seo') || lowerInput.includes('design')) {
+                return botResponses['skills'];
+            } else if (lowerInput.includes('education') || lowerInput.includes('study') || lowerInput.includes('degree')) {
+                return botResponses['education'];
+            } else if (lowerInput.includes('contact') || lowerInput.includes('phone') || lowerInput.includes('email') || lowerInput.includes('address')) {
+                return botResponses['contact'];
+            } else if (lowerInput.includes('hello') || lowerInput.includes('salam') || lowerInput.includes('assalam')) {
+                return botResponses['hello'];
+            } else if (lowerInput.includes('hi') || lowerInput.includes('hey')) {
+                return botResponses['hi'];
+            } else if (lowerInput.includes('cv') || lowerInput.includes('resume') || lowerInput.includes('download')) {
+                return botResponses['cv'];
+            } else if (lowerInput.includes('about') || lowerInput.includes('who')) {
+                return botResponses['about'];
+            } else {
+                return botResponses['default'];
+            }
+        }
+
+        function handleQuickReply(topic) {
+            handleUserInput(topic);
+        }
+
+        function handleUserInput(input) {
+            // Add user message
+            const displayText = input.charAt(0).toUpperCase() + input.slice(1);
+            addMessage(displayText, true);
+
+            // Show typing indicator
+            showTyping();
+
+            // Get and display bot response after delay
+            setTimeout(() => {
+                hideTyping();
+             
